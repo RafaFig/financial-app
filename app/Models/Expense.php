@@ -22,7 +22,7 @@ class Expense extends Model
     ];
 
     protected $casts = [
-        'amount' => 'float',
+        'total_amount' => 'float',
         'start_date' => 'date'
     ];
 

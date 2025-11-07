@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Expenses\Tables;
 
+use App\Models\Expense;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -33,29 +34,67 @@ class ExpensesTable
             ])
             ->deferLoading()
             ->columns([
+                TextColumn::make('name')
+                    ->label('Nome')
+                    ->searchable(),
                 TextColumn::make('category.name')
+                    ->label('Categoria')
                     ->searchable(),
                 TextColumn::make('account.name')
-                    ->searchable(),
-                TextColumn::make('name')
+                    ->label('Conta')
                     ->searchable(),
                 TextColumn::make('total_amount')
-                    ->numeric()
-                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->label('Valor total')
+                    ->prefix('R$ ')
+                    ->formatStateUsing(fn($state) => number_format($state, 2, ',', '.'))
                     ->sortable(),
                 TextColumn::make('status')
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
+                        'pending' => 'Pendente',
+                        'canceled' => 'Cancelado',
+                        'partial' => 'Pago parcial',
+                        'paid' => 'Pago',
+                    })
+                    ->color(fn(string $state): string => match ($state) {
+                        'pending' => 'danger',
+                        'canceled' => 'warning',
+                        'partial' => 'info',
+                        'paid' => 'success',
+                    })
+                    ->badge()
                     ->searchable(),
                 TextColumn::make('payment_method')
+                    ->label('Frequência')
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
+                        'unique' => 'Único',
+                        'fixed' => 'Fixo',
+                        'installment' => 'Parcelado'
+                    })
                     ->searchable(),
                 TextColumn::make('periodicity')
+                    ->label('Periodicidade')
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
+                        'daily' => 'Diária',
+                        'weekly' => 'Semanal',
+                        'monthly' => 'Mensal',
+                        'yearly' => 'Anual',
+                    })
                     ->searchable(),
                 TextColumn::make('installments')
+                    ->label('Parcelas')
                     ->numeric()
+                    ->state(function (Expense $expense) {
+                        $amountMonthly = $expense->total_amount / $expense->installments;
+                        return "{$expense->installments}x de R$ {$amountMonthly}";
+                    })
                     ->sortable(),
                 TextColumn::make('start_date')
-                    ->date()
-                    ->toggleable(isToggledHiddenByDefault: true)
-                    ->sortable(),
+                    ->label('Data de início')
+                    ->dateTime()
+                    ->since('America/Sao_Paulo')
+                    ->isoDateTimeTooltip(timezone: 'America/Sao_Paulo')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->label('Data de criação')
                     ->dateTime()
