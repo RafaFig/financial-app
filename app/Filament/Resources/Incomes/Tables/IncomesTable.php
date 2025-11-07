@@ -39,14 +39,14 @@ class IncomesTable
                     ->searchable(),
                 TextColumn::make('amount')
                     ->label('Valor total')
-                    ->numeric()
-                    ->money('BRL')
+                    ->prefix('R$ ')
+                    ->formatStateUsing(fn($state) => number_format($state, 2, ',', '.'))
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
                 TextColumn::make('net_amount')
                     ->label('Valor líquido')
-                    ->numeric()
-                    ->money('BRL')
+                    ->prefix('R$ ')
+                    ->formatStateUsing(fn($state) => number_format($state, 2, ',', '.'))
                     ->sortable(),
                 TextColumn::make('periodicity')
                     ->label('Periodicidade')

@@ -36,6 +36,8 @@ class ExpensesTable
             ->columns([
                 TextColumn::make('name')
                     ->label('Nome')
+                    ->icon(Heroicon::ArrowTrendingDown)
+                    ->iconColor('danger')
                     ->searchable(),
                 TextColumn::make('category.name')
                     ->label('Categoria')
