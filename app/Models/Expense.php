@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -34,6 +35,13 @@ class Expense extends Model
     public function account(): BelongsTo
     {
         return $this->belongsTo(Account::class);
+    }
+
+    public function monthlyAmount(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->installments > 0 ? $this->total_amount / $this->installments : $this->total_amount
+        );
     }
 
     public function payers(): BelongsToMany

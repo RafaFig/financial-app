@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Widgets\StatsOverview;
 use BackedEnum;
 use Filament\Facades\Filament;
 use Filament\Pages\Page;
@@ -25,5 +26,12 @@ class Dashboard extends Page
     protected static ?string $navigationLabel = 'Início';
 
     protected static ?string $title = 'Dashboard';
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            StatsOverview::make()
+        ];
+    }
 
 }
