@@ -97,6 +97,7 @@ class ExpenseForm
                             ->placeholder('Selecione ao menos 1 pagador')
                             ->multiple()
                             ->preload()
+                            ->getOptionLabelFromRecordUsing(fn($record) => explode(' ', $record->name)[0])
                             ->relationship('payers', 'name')
                             ->required(),
                         Select::make('category_id')

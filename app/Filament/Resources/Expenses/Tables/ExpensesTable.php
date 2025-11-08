@@ -86,6 +86,10 @@ class ExpensesTable
                     ->label('Parcelas')
                     ->numeric()
                     ->state(function (Expense $expense) {
+                        if (!$expense->installments) {
+                            return null;
+                        }
+
                         $amountMonthly = $expense->total_amount / $expense->installments;
                         return "{$expense->installments}x de R$ {$amountMonthly}";
                     })

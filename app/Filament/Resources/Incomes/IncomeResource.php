@@ -18,7 +18,9 @@ class IncomeResource extends Resource
 {
     protected static ?string $model = Income::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArrowTrendingUp;
+
+    protected static string|BackedEnum|null $activeNavigationIcon = Heroicon::ArrowTrendingUp;
 
     protected static ?string $label = 'Receita';
 

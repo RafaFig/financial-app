@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -37,13 +38,11 @@ class User extends Authenticatable
         ];
     }
 
-    public function initials(): string
+    public function firstName(): Attribute
     {
-        return Str::of($this->name)
-            ->explode(' ')
-            ->take(2)
-            ->map(fn($word) => Str::substr($word, 0, 1))
-            ->implode('');
+        return Attribute::make(
+            get: fn () => explode(' ', $this->name)[0] ?? $this->name,
+        );
     }
 
     public static function store(array $data): Model

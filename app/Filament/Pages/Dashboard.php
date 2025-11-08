@@ -18,7 +18,12 @@ class Dashboard extends Page
 
     protected string $view = 'filament.pages.dashboard';
 
-    protected static string | BackedEnum | null $navigationIcon = Heroicon::OutlinedHome;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedHome;
+
+    protected static string|BackedEnum|null $activeNavigationIcon = Heroicon::Home;
 
     protected static ?string $navigationLabel = 'Início';
+
+    protected static ?string $title = 'Dashboard';
+
 }
