@@ -10,9 +10,6 @@ use Illuminate\Support\Collection;
 
 class CategorySeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         self::categories()->each(fn(array $category) => Category::create([

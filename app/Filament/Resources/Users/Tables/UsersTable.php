@@ -16,30 +16,30 @@ class UsersTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label('Nome')
                     ->searchable(),
                 TextColumn::make('email')
-                    ->label('Email address')
+                    ->label('E-mail')
                     ->searchable(),
-                TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
                 TextColumn::make('created_at')
+                    ->label('Data de criação')
                     ->dateTime()
+                    ->since('America/Sao_Paulo')
+                    ->isoDateTimeTooltip(timezone: 'America/Sao_Paulo')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
                 TextColumn::make('updated_at')
+                    ->label('Última atualização')
                     ->dateTime()
+                    ->since('America/Sao_Paulo')
+                    ->isoDateTimeTooltip(timezone: 'America/Sao_Paulo')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('two_factor_confirmed_at')
-                    ->dateTime()
-                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
                 EditAction::make(),
             ])
             ->toolbarActions([

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
 
-            $table->unsignedBigInteger('category_id')->index();
-            $table->unsignedBigInteger('account_id')->index();
+            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
+            $table->foreignId('account_id')->constrained('accounts')->cascadeOnDelete();
             $table->string('name')->index();
             $table->text('description')->nullable();
             $table->decimal('total_amount', 15, 2)->index();
@@ -26,6 +26,14 @@ return new class extends Migration
             $table->integer('installments')->index()->nullable();
             $table->date('start_date')->index()->nullable();
         });
+
+        Schema::create('expense_users', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+
+            $table->foreignId('expense_id')->constrained('expenses')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+        });
     }
 
     /**
@@ -34,5 +42,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('expenses');
+        Schema::dropIfExists('expense_users');
     }
 };

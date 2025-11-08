@@ -14,8 +14,8 @@ return new class extends Migration {
             $table->id();
             $table->timestamps();
 
-            $table->unsignedBigInteger('category_id')->index();
-            $table->unsignedBigInteger('account_id')->index();
+            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
+            $table->foreignId('account_id')->constrained('accounts')->cascadeOnDelete();
             $table->string('name')->index();
             $table->text('description')->nullable();
             $table->decimal('amount', 15, 2)->index();

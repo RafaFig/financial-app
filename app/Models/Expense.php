@@ -39,10 +39,10 @@ class Expense extends Model
     public function payers(): BelongsToMany
     {
         return $this->belongsToMany(
-            Payer::class,
-            'expense_payers',
+            User::class,
+            'expense_users',
             'expense_id',
-            'payer_id'
-        )->using(ExpensePayer::class);
+            'user_id'
+        )->using(ExpenseUser::class);
     }
 }

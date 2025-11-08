@@ -9,9 +9,6 @@ use Illuminate\Support\Collection;
 
 class AccountSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         self::accounts()->each(fn(string $name) => Account::create([

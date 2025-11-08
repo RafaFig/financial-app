@@ -121,10 +121,8 @@ class ExpensesTable
                         'paid' => 'Pago',
                         'partial' => 'Pago parcial',
                     ])
-//                    ->query(fn(Builder $query) => $query->whereNotIn('status', ['paid', 'canceled']))
             ])
             ->recordActions([
-                ViewAction::make(),
                 EditAction::make(),
             ])
             ->toolbarActions([
